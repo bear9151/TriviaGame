@@ -15,25 +15,39 @@ var q = {
 		question: "Where do I live?",
 		choices: ["Florida", "California", "Hawaii", "Chicago"],
 		correctAnswerPosition: 0,
+	},
+	third: {
+		question: "What's my favorite color?",
+		choices: ["Purple", "Green", "Yellow", "Red"],
+		correctAnswerPosition: 1,
 	}
 }
 
+$.each(q, function(x, y) {
+	console.log(y.question);
+});
+
 //Reset Function to write the questions.
 function reset() {
+		//Empties the div
+		qdiv.empty();
 
-	//Writes the question
-	var a = $("<h2>");
-	a.text(q.first.question);
-	qdiv.html(a);
+	$.each(q, function(x, y) {
 
-	//Generates Radio Button Choices
-	for (var i = 0; i < q.first.choices.length; i++) {
-		qdiv.append('<input type="radio" name="name" value="test">' + q.first.choices[i] + '</br>');
-	};
+		//Writes the question
+		qdiv.append("<h2>" + y.question + "</h2>");
 
-	//Next & Submit Buttons
-	qdiv.append('<a id="nextbutton" class="btn btn-primary">Next</a>');
-	$("#nextbutton").on("click", nextQuestion);
+		//Generates Radio Button Choices
+			$.each(y.choices, function(c, d){
+			qdiv.append('<input type="radio" name="name" value="test">' + d + '</br>');
+		});
+
+	});
+	
+	//Submit Button
+	qdiv.append('<a id="submitbutton" class="btn btn-success">Submit</a>');
+	$("#submitbutton").on("click", console.log("Submitted"));
+
 };
 
 //When the page loads
