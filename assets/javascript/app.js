@@ -4,6 +4,7 @@ var correctAnswers = 0;
 var incorrectAnswers = 0;
 var unAnswered = 0;
 var qdiv = $("#questions-div");
+var intervalId;
 
 var q = {
 	first: {
@@ -57,7 +58,11 @@ var q = {
 function reset() {
 	correctAnswers = 0;
 	incorrectAnswers = 0;
-	
+	clearInterval(intervalId);
+
+	run();
+
+
 	//Empties the div
 	qdiv.empty();
 
@@ -158,6 +163,22 @@ qdiv.html("<h1>Finished!</h1>")
 		event.preventDefault();
 	});
 }
+
+//timer function
+    var number = 100;
+
+    function run() {
+      intervalId = setInterval(decrement, 1000);
+    }
+
+    function decrement() {
+    	number--;
+    	$("#show-number").html("<h2>" + number + "</h2>");
+    	if (number === 0) {
+    		alert("Time Up!");
+    		reset();
+    	}
+    }
 
 
 
