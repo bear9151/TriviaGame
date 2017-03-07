@@ -2,9 +2,9 @@
 
 var correctAnswers = 0;
 var incorrectAnswers = 0;
-var unAnswered = 0;
 var qdiv = $("#questions-div");
 var intervalId;
+var number;
 
 var q = {
 	first: {
@@ -58,6 +58,7 @@ var q = {
 function reset() {
 	correctAnswers = 0;
 	incorrectAnswers = 0;
+	number = 100;
 	clearInterval(intervalId);
 
 	run();
@@ -97,6 +98,7 @@ function reset() {
 //Check Answers function
 
 function checkAnswers() {
+	stop();
 	var firstAnswer = $('input[name=first]:checked').val();
 	var secondAnswer = $('input[name=second]:checked').val();
 	var thirdAnswer = $('input[name=third]:checked').val();
@@ -156,7 +158,7 @@ function checkAnswers() {
 
 qdiv.html("<h1>Finished!</h1>")
 	.append("<h2>Correct Answers: " + correctAnswers + "</h2>")
-	.append("<h2>Incorrect Answers: " + incorrectAnswers + "</h2>")
+	.append("<h2>Incorrect/Unfinished Answers: " + incorrectAnswers + "</h2>")
 	.append('<a id="reset-button" class="btn btn-warning">Play Again!</a>');
 	$("#reset-button").on("click", function() {
 		reset();
@@ -164,22 +166,24 @@ qdiv.html("<h1>Finished!</h1>")
 	});
 }
 
-//timer function
-    var number = 100;
+//timer functions
 
-    function run() {
-      intervalId = setInterval(decrement, 1000);
-    }
+function run() {
+  intervalId = setInterval(decrement, 1000);
+}
 
-    function decrement() {
-    	number--;
-    	$("#show-number").html("<h2>" + number + "</h2>");
-    	if (number === 0) {
-    		alert("Time Up!");
-    		reset();
-    	}
-    }
+function decrement() {
+	number--;
+	$("#show-number").html("<h2>" + number + "</h2>");
+	if (number === 0) {
+		alert("Times Up!");
+		checkAnswers();
+	}
+}
 
+function stop() {
+	clearInterval(intervalId);
+}
 
 
 //When the page loads
